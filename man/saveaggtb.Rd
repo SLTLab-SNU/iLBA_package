@@ -2,10 +2,10 @@
 % Please edit documentation in R/saveaggtb.R
 \name{saveaggtb}
 \alias{saveaggtb}
-\title{Generate aggregated masked table and distribution of information loss}
+\title{Save aggregated masked table and distribution of information loss}
 \usage{
 saveaggtb(
-  hkeyLevel,
+  hkey.level,
   key,
   input.path = "fulltable.rds",
   output.table.path = "aggtable.csv",
@@ -13,17 +13,15 @@ saveaggtb(
 )
 }
 \arguments{
-\item{hkeyLevel}{Integer scalar indicating which hierarchy level of \code{hkey} to aggregate (integer: 1 indicates the top‑level hierarchical variable).}
+\item{hkey.level}{Integer indicating the level of hierarchical key at which the aggregation is performed (1 indicates the top level).}
 
-\item{key}{Character vector of key variable names to group by (must exist in the saved full table).}
+\item{key}{Character vector of key variable names used in the aggregated table.}
 
-\item{input.path}{String path to the RDS file produced by \code{savefulltb()}. Default is "fulltable.rds".}
+\item{input.path}{String path to load the RDS object produced by \code{savefulltb()} (default = "fulltable.rds").}
 
-\item{output.table.path}{String path to write the aggregated masked table CSV. Default is "aggtable.csv".}
-
-\item{output.infoloss.path}{String path to write the information loss distribution CSV. Default is "infoloss.csv".}
+\item{output.infoloss.path}{String path to save the information loss distribution in CSV format (default = "infoloss.csv").}
 }
 \description{
-This function aggregates and masks counts from a previously saved full frequency table,
-then computes the distribution of information loss.
+Aggregates and masks counts from a previously saved full frequency table via iLBA algorithm,
+computes the distribution of information loss, and saves the results as a CSV file.
 }
