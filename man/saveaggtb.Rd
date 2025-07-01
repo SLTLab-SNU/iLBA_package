@@ -19,6 +19,8 @@ saveaggtb(
 
 \item{input.path}{String path to load the RDS object produced by \code{savefulltb()} (default = "fulltable.rds").}
 
+\item{output.table.path}{String path to save the aggregated masked table in CSV format (default = "aggtable.csv").}
+
 \item{output.infoloss.path}{String path to save the information loss distribution in CSV format (default = "infoloss.csv").}
 }
 \description{

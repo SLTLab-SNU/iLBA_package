@@ -6,6 +6,7 @@
 #' @param hkey.level Integer indicating the level of hierarchical key at which the aggregation is performed (1 indicates the top level).
 #' @param key Character vector of key variable names used in the aggregated table.
 #' @param input.path String path to load the RDS object produced by `savefulltb()` (default = "fulltable.rds").
+#' @param output.table.path String path to save the aggregated masked table in CSV format (default = "aggtable.csv").
 #' @param output.infoloss.path String path to save the information loss distribution in CSV format (default = "infoloss.csv").
 #'
 #' @importFrom magrittr %>%
@@ -77,13 +78,13 @@ saveaggtb <- function(hkey.level, key, input.path = "fulltable.rds", output.tabl
 
   # Preview
   cat("Header of aggregated masked table via iLBA\n\n")
-  print(head(FinalResult), row.names = FALSE)
+  print(utils::head(FinalResult), row.names = FALSE)
   cat("\nDistribution of Information Loss\n")
   print(as.data.frame(InfoLoss), row.names = FALSE)
 
   # Save results
-  write.csv(FinalResult, file = output.table.path, row.names = FALSE)
+  utils::write.csv(FinalResult, file = output.table.path, row.names = FALSE)
   cat("\nAggregated table saved to \"", output.table.path, "\"\n", sep = "")
-  write.csv(InfoLoss, file = output.infoloss.path, row.names = FALSE)
+  utils::write.csv(InfoLoss, file = output.infoloss.path, row.names = FALSE)
   cat("Information Loss saved to \"", output.infoloss.path, "\"\n", sep = "")
 }

@@ -22,14 +22,15 @@
 #' }
 #' @importFrom magrittr %>%
 #' @export
+#'
 savefulltb <- function(data, hkey, key = NULL, B = 3, rank = NULL, key.threshold = 100, output.path = "fulltable.rds") {
 
   dt <- data.table::as.data.table(data)
 
   # Remove rows with missing values
-  na_rows <- dt[, sum(!complete.cases(.SD))]
+  na_rows <- dt[, sum(!stats::complete.cases(.SD))]
   if (na_rows > 0) {
-    dt <- dt[complete.cases(dt)]
+    dt <- dt[stats::complete.cases(dt)]
     cat(paste(na_rows, "rows with missing values have been removed.\n"))
   }
 
