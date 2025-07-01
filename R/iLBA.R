@@ -1,15 +1,17 @@
-#' LBA Vector Masking Calculation
+#' Information Loss Bounded Aggregation (iLBA)
 #'
-#' Computes masked cell values based on SCA logic and system bounds.
+#' Applies iLBA algorithm when aggregating cell frequencies.
+#' This function is intended for internal use and is not meant to be called directly by users.
 #'
 #' @param x Numeric vector of length 3: c(K, k, f_i)
 #'   - K: number of original cells ≤ B
 #'   - k: number of cells equal to B after SCA
 #'   - f_i: true frequency from upper table
-#' @param B Threshold parameter (default = 3).
+#' @param B Threshold for masking (default = 3).
 #' @return Numeric vector c(Masked, type1, type2).
-#' @export
-LBAvec <- function(x, B = 3) {
+#' @keywords internal
+#' @references Park, M.J., Kim, H.J., & Kwon, S. (2024). *Journal of the Korean Statistical Society*. Springer Nature.
+iLBA <- function(x, B = 3) {
   nLessEqOrigin <- x[1] # K
   nEqSCA <- x[2]        # k
   SumSCA <- x[3]        # f_i

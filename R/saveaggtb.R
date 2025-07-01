@@ -1,60 +1,48 @@
-#' Generate aggregated masked table and distribution of information loss
+#' Save aggregated masked table and distribution of information loss
 #'
-#' This function aggregates and masks counts from a previously saved full frequency table,
-#' then computes the distribution of information loss.
+#' Aggregates and masks counts from a previously saved full frequency table via iLBA algorithm,
+#' computes the distribution of information loss, and saves the results as a CSV file.
 #'
-#' @param hkeyLevel Integer scalar indicating which hierarchy level of `hkey` to aggregate (integer: 1 indicates the top‑level hierarchical variable).
-#' @param key Character vector of key variable names to group by (must exist in the saved full table).
-#' @param input.path String path to the RDS file produced by `savefulltb()`. Default is "fulltable.rds".
-#' @param output.table.path String path to write the aggregated masked table CSV. Default is "aggtable.csv".
-#' @param output.infoloss.path String path to write the information loss distribution CSV. Default is "infoloss.csv".
+#' @param hkey.level Integer indicating the level of hierarchical key at which the aggregation is performed (1 indicates the top level).
+#' @param key Character vector of key variable names used in the aggregated table.
+#' @param input.path String path to load the RDS object produced by `savefulltb()` (default = "fulltable.rds").
+#' @param output.infoloss.path String path to save the information loss distribution in CSV format (default = "infoloss.csv").
 #'
-#' @import tictoc
-#' @importFrom dplyr group_by summarise mutate
 #' @importFrom magrittr %>%
 
 #' @export
-#'
+saveaggtb <- function(hkey.level, key, input.path = "fulltable.rds", output.table.path = "aggtable.csv", output.infoloss.path = "infoloss.csv") {
 
-saveaggtb <- function(hkeyLevel, key, input.path = "fulltable.rds", output.table.path = "aggtable.csv", output.infoloss.path = "infoloss.csv") {
-
-  tic()
-
-  # 입력 경로 존재 여부 확인
+  # Check if the input file exists
   if (!file.exists(input.path)) {
-    stop(paste0("The specified input file does not exist: ", input.path))
+    stop(paste0("The specified input file does not exist: ", shQuote(input.path)))
   }
 
-  # Input fulltable 불러오기 (.rds 파일)
-
+  # Load saved full table
   fulltable <- readRDS(input.path)
   fulltb <- fulltable$fulltb
   B <- fulltable$B
   hkey_full <- fulltable$hkey
   key_full <- fulltable$key
 
-
-  # hkeyLevel 제대로 입력했는지 확인
-  if(hkeyLevel > length(hkey_full)){
-    stop(paste0("Invalid hkeyLevel: provided level (", hkeyLevel,
-                ") exceeds the number of available hierarchy levels (", length(hkey_full), ")."))
-  }
-  target <- hkey_full[hkeyLevel]
-
-  # key가 fulltable에 존재하는 키변수인지 확인
-
-  valid_key = !(key %in% key_full)
-  if (any(valid_key)) {
-    no_var = key[valid_key]
-    stop(paste("The following key variables do not exist in fulltable:", paste(no_var, collapse = ', ')),'\n' )
+  # Check if hkey.level is valid
+  if (hkey.level > length(hkey_full)) {
+    stop(paste0("Invalid hkey.level: provided level (", hkey.level,
+                ") exceeds the number of hierarchical key variables in the full table (", length(hkey_full), ")."))
   }
 
 
-  # 그룹핑 및 요약 (병렬처리 제거, 일반 dplyr 사용)
+  # Check if key is valid
+  invalid_key <- setdiff(key, key_full)
+  if (length(invalid_key) > 0) {
+    stop("The following key variables do not exist in the full table: ", paste(invalid_key, collapse = ", "))
+  }
 
+  # Aggregate and summarize counts
+  target <- hkey_full[seq_len(hkey.level)]
   summaryData <- fulltb %>%
-    group_by(across(all_of(c(target, key)))) %>%
-    summarise(
+    dplyr::group_by(dplyr::across(dplyr::all_of(c(target, key)))) %>%
+    dplyr::summarise(
       SumGrOrigin = sum(N[N > B]),
       nLessEqOrigin = sum(N <= B),
       nEqSCA = sum(N_SCA == B),
@@ -62,40 +50,40 @@ saveaggtb <- function(hkeyLevel, key, input.path = "fulltable.rds", output.table
       .groups = "drop"
     )
 
-
-  # iLBA 마스킹 계산
+  # Apply iLBA masking
   iLBAdata <- as.data.frame(summaryData)
   nCol <- ncol(iLBAdata)
   iLBACore <- iLBAdata[, (nCol - 2):nCol]
 
-  Masked <- t(apply(iLBACore, 1, LBAvec, B = B))
+  Masked <- t(apply(iLBACore, 1, iLBA, B = B))
   colnames(Masked) <- c("Masked", "Type1", "Type2")
 
   FinalResult <- cbind(iLBAdata, Masked)
-  FinalResult$N.Masked <- FinalResult$SumGrOrigin + FinalResult$Masked  # 최종 Masked count
+  FinalResult$N.Masked <- FinalResult$SumGrOrigin + FinalResult$Masked
   Loss <- FinalResult$N.Masked - FinalResult$SumGrOrigin - FinalResult$SumOrigin
-  InfoLoss <- data.frame(Loss) %>% group_by(Loss) %>% summarise(n = n()) %>% mutate(perc = round(n/sum(n)*100,2))
-  total_row <- data.frame(Loss = "Total", n = sum(InfoLoss$n), perc = sum(InfoLoss$perc))
+
+  # Summarize information loss
+  InfoLoss <- data.frame(Loss) %>%
+    dplyr::group_by(Loss) %>%
+    dplyr::summarise(n = dplyr::n()) %>%
+    dplyr::mutate(perc = round(n / sum(n) * 100, 2))
+  total_row <- data.frame(Loss = "Total", n = sum(InfoLoss$n), perc = 100)
   InfoLoss <- rbind(InfoLoss, total_row)
 
+  # Retain only necessary columns and sort
+  FinalResult <- FinalResult[, c(target, key, "N.Masked", "Type1", "Type2")]
+  FinalResult <- data.table::as.data.table(FinalResult)
+  data.table::setorderv(FinalResult, c(target, key))
 
-  # 필요한 열만 남기고 정렬
-  FinalResult <- FinalResult[, c(target, key, "N.Masked","Type1","Type2")]
-  FinalResult <- FinalResult[order(do.call(order, FinalResult[, c(target, key), drop = FALSE])), ]
-
-
-  # 미리보기
+  # Preview
   cat("Header of aggregated masked table via iLBA\n\n")
-  print(head(FinalResult),row.names = FALSE)
-  cat("\n")
-  cat("Distribution of Information Loss\n")
-  print(as.data.frame(InfoLoss),row.names = FALSE)
+  print(head(FinalResult), row.names = FALSE)
+  cat("\nDistribution of Information Loss\n")
+  print(as.data.frame(InfoLoss), row.names = FALSE)
 
-
-  # 결과 저장
-  write.csv(FinalResult, file = output.table.path)
-  cat("\nAggregated table saved to", output.table.path, "\n")
-  write.csv(InfoLoss, file = output.infoloss.path)
-  cat("Information Loss saved to", output.infoloss.path, "\n")
-  toc()
+  # Save results
+  write.csv(FinalResult, file = output.table.path, row.names = FALSE)
+  cat("\nAggregated table saved to \"", output.table.path, "\"\n", sep = "")
+  write.csv(InfoLoss, file = output.infoloss.path, row.names = FALSE)
+  cat("Information Loss saved to \"", output.infoloss.path, "\"\n", sep = "")
 }

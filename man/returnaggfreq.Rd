@@ -2,27 +2,28 @@
 % Please edit documentation in R/returnaggfreq.R
 \name{returnaggfreq}
 \alias{returnaggfreq}
-\title{Generate a masked frequency for a specified cell}
+\title{Return masked frequency for a specific cell}
 \usage{
 returnaggfreq(
-  hkeyLevel,
+  hkey.level,
   key,
-  hkey_value,
-  key_value,
+  hkey.value,
+  key.value,
   input.path = "fulltable.rds"
 )
 }
 \arguments{
-\item{hkeyLevel}{Integer scalar indicating which hierarchy level to select (integer: 1 indicates the top‑level hierarchical variable).}
+\item{hkey.level}{Integer indicating the number of hierarchical key levels to use (1 indicates top level).}
 
-\item{key}{Character vector of key variable names used for grouping.}
+\item{key}{Character vector of key variable names used for the aggregated cell frequency.}
 
-\item{hkey_value}{A value matching one of the hierarchical key's levels at the chosen level.}
+\item{hkey.value}{A vector of values for the hierarchical key variables (length must equal \code{hkey.level}).}
 
-\item{key_value}{A vector of values (in the same order as \code{key}) specifying the cell.}
+\item{key.value}{A vector of values for the key variables (in the same order as \code{key}).}
 
-\item{input.path}{String path to the RDS file produced by \code{savefulltb()}. Defaults to "fulltable.rds".}
+\item{input.path}{String path to load the RDS object produced by \code{savefulltb()} (default = "fulltable.rds").}
 }
 \description{
-Calculate the masked frequency for a single cell defined by specified hkey value and key value.
+Computes the masked count via iLBA algorithm for a specified cell
+defined by values of hierarchical key variables and key variables.
 }
