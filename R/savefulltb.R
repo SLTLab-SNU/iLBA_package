@@ -11,19 +11,22 @@
 #' @param key.threshold Maximum number of unique values allowed for key variables (default = 100). Variables with more unique values will be removed.
 #' @param output.path String path to save the resulting RDS object (default = "fulltable.rds").
 #'
-#' This function saves the following metadata:
+#' @return
+#' This function is called for its side effects: it saves a list object to an RDS file at the specified path.
+#' The saved object contains the following components:
 #' \describe{
-#'   \item{fulltb}{A `data.table` with raw counts (`N`) and masked counts (`N_SCA`).}
-#'   \item{B}{The masking threshold used for SCA.}
-#'   \item{hkey}{Ordered hierarchical key variable names.}
-#'   \item{hkey_values}{Named list of sorted unique values for each hierarchical key.}
-#'   \item{key}{Final set of key variables after threshold filtering.}
-#'   \item{key_values}{Named list of sorted unique values for each key.}
+#'   \item{\code{fulltb}}{A \code{data.table} with original counts (\code{N}) and masked counts (\code{N_SCA}).}
+#'   \item{\code{B}}{The masking threshold used for SCA.}
+#'   \item{\code{hkey}}{Ordered hierarchical key variable names.}
+#'   \item{\code{hkey_values}}{A named list of sorted unique values for each hierarchical key variable.}
+#'   \item{\code{key}}{Final set of key variable names used in the frequency table}
+#'   \item{\code{key_values}}{A named list of sorted unique values for each key variable.}
 #' }
-#' @importFrom magrittr %>%
-#' @export
 #'
-savefulltb <- function(data, hkey, key = NULL, B = 3, rank = NULL, key.threshold = 100, output.path = "fulltable.rds") {
+#' @importFrom magrittr %>%
+#' @import data.table
+#' @export
+savefulltb <- function(data, hkey, key = NULL, B = 3, rank = NULL, key.threshold = 100, output.path = "fulltable.rds"){
 
   dt <- data.table::as.data.table(data)
 
@@ -95,4 +98,7 @@ savefulltb <- function(data, hkey, key = NULL, B = 3, rank = NULL, key.threshold
   }
   cat("Key variables:", paste(key, collapse = ', '), "\n")
   cat("B:", B, "\n")
+
+  invisible(result)
 }
+
