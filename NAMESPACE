@@ -3,4 +3,5 @@
 export(returnaggfreq)
 export(saveaggtb)
 export(savefulltb)
+import(data.table)
 importFrom(magrittr,"%>%")
