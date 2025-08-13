@@ -24,9 +24,9 @@ saveaggtb(
 \item{output.infoloss.path}{String path to save the information loss distribution in CSV format (default = "infoloss.csv").}
 }
 \value{
-This function is called for its side effects: it saves two CSV files —
+Saves two CSV files —
 (1) the aggregated masked table and (2) the distribution of information loss —
-to the specified file paths. No value is returned.
+to the specified file paths.
 }
 \description{
 Aggregates and masks counts from a previously saved full frequency table via iLBA algorithm,
@@ -43,7 +43,7 @@ savefulltb( census,
             output.path = fulltb)
 
 saveaggtb( hkey.level = 2,
-           key        = c("RPRSNTV_SEXDSTN","AGE_FACTOR"),
+           key        = c("RPRSNTV_SEXDSTN","AGE_FACTOR","BR_ACT"),
            input.path      = fulltb)
 }
 

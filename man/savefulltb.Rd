@@ -30,7 +30,7 @@ savefulltb(
 \item{output.path}{String path to save the resulting RDS object (default = "fulltable.rds").}
 }
 \value{
-This function is called for its side effects: it saves a list object to an RDS file at the specified path.
+Saves a list object to an RDS file to the specified path.
 The saved object contains the followings:
 \item{fulltb}{A \code{data.table} with original counts (\code{N}) and masked counts (\code{N_SCA}).}
 \item{B}{The masking threshold used for SCA.}

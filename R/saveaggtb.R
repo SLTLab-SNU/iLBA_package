@@ -25,7 +25,7 @@
 #'             output.path = fulltb)
 #'
 #' saveaggtb( hkey.level = 2,
-#'            key        = c("RPRSNTV_SEXDSTN","AGE_FACTOR"),
+#'            key        = c("RPRSNTV_SEXDSTN","AGE_FACTOR","BR_ACT"),
 #'            input.path      = fulltb)
 #' }
 #'
