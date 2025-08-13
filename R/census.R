@@ -1,0 +1,22 @@
+#' Census sample data
+#'
+#' 3 categories of `CP_CD` (21, 22, 23)에서 각 1,000행씩 추출한 예시 데이터.
+#' 패키지 함수 예제와 테스트를 위한 소규모 샘플입니다.
+#'
+#' @format A data frame with 3000 rows and 8 variables:
+#' \describe{
+#'   \item{CP_CD}{category code (3 levels: 21, 22, 23)}
+#'   \item{CDW_CD}{code (≈80 levels)}
+#'   \item{ZONE_CD}{zone/region code (≈100 levels)}
+#'   \item{RPRSNTV_SEXDSTN}{representative sex (2 levels)}
+#'   \item{AGE_FACTOR}{age group (6 levels)}
+#'   \item{BR_ACT}{branch activity (3 levels)}
+#'   \item{BR_JOJIK}{job grade/type (2 levels)}
+#'   \item{ORG_FORM_CD}{organization form (5 levels)}
+#' }
+#' @details Sampling: for each CP_CD in \{21,22,23\}, 1,000 rows were sampled
+#'   at random with a fixed seed.
+#' @source Internal sample derived from the original census-like dataset.
+#' @keywords datasets
+#' @usage data(census)
+"census"

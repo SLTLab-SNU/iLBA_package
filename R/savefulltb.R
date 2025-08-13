@@ -13,15 +13,13 @@
 #'
 #' @return
 #' This function is called for its side effects: it saves a list object to an RDS file at the specified path.
-#' The saved object contains the following components:
-#' \describe{
-#'   \item{\code{fulltb}}{A \code{data.table} with original counts (\code{N}) and masked counts (\code{N_SCA}).}
-#'   \item{\code{B}}{The masking threshold used for SCA.}
-#'   \item{\code{hkey}}{Ordered hierarchical key variable names.}
-#'   \item{\code{hkey_values}}{A named list of sorted unique values for each hierarchical key variable.}
-#'   \item{\code{key}}{Final set of key variable names used in the frequency table}
-#'   \item{\code{key_values}}{A named list of sorted unique values for each key variable.}
-#' }
+#' The saved object contains the followings:
+#' \item{fulltb}{A \code{data.table} with original counts (\code{N}) and masked counts (\code{N_SCA}).}
+#' \item{B}{The masking threshold used for SCA.}
+#' \item{hkey}{Ordered hierarchical key variable names.}
+#' \item{hkey_values}{A named list of sorted unique values for each hierarchical key variable.}
+#' \item{key}{Final set of key variable names used in the frequency table}
+#' \item{key_values}{A named list of sorted unique values for each key variable.}
 #'
 #' @importFrom magrittr %>%
 #' @import data.table

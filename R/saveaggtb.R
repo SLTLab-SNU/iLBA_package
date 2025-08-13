@@ -9,8 +9,29 @@
 #' @param output.table.path String path to save the aggregated masked table in CSV format (default = "aggtable.csv").
 #' @param output.infoloss.path String path to save the information loss distribution in CSV format (default = "infoloss.csv").
 #'
+#' @return
+#' This function is called for its side effects: it saves two CSV files —
+#' (1) the aggregated masked table and (2) the distribution of information loss —
+#' to the specified file paths. No value is returned.
+#'
+#' @examples
+#' \donttest{
+#' fulltb <- file.path(tempdir(), 'fulltable.rds')
+#'
+#' savefulltb( census,
+#'             hkey = c("CP_CD","CDW_CD","ZONE_CD"),
+#'             key = c("RPRSNTV_SEXDSTN", "AGE_FACTOR", "BR_ACT", "BR_JOJIK", "ORG_FORM_CD"),
+#'             B=3,
+#'             output.path = fulltb)
+#'
+#' saveaggtb( hkey.level = 2,
+#'            key        = c("RPRSNTV_SEXDSTN","AGE_FACTOR"),
+#'            input.path      = fulltb)
+#' }
+#'
 #' @importFrom magrittr %>%
-
+#'
+#'
 #' @export
 saveaggtb <- function(hkey.level, key, input.path = "fulltable.rds", output.table.path = "aggtable.csv", output.infoloss.path = "infoloss.csv") {
 
@@ -76,7 +97,6 @@ saveaggtb <- function(hkey.level, key, input.path = "fulltable.rds", output.tabl
   FinalResult <- data.table::as.data.table(FinalResult)
   data.table::setorderv(FinalResult, c(target, key))
 
-  # Preview
   cat("Header of aggregated masked table via iLBA\n\n")
   print(utils::head(FinalResult), row.names = FALSE)
   cat("\nDistribution of Information Loss\n")

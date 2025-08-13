@@ -23,7 +23,28 @@ saveaggtb(
 
 \item{output.infoloss.path}{String path to save the information loss distribution in CSV format (default = "infoloss.csv").}
 }
+\value{
+This function is called for its side effects: it saves two CSV files —
+(1) the aggregated masked table and (2) the distribution of information loss —
+to the specified file paths. No value is returned.
+}
 \description{
 Aggregates and masks counts from a previously saved full frequency table via iLBA algorithm,
 computes the distribution of information loss, and saves the results as a CSV file.
+}
+\examples{
+\donttest{
+fulltb <- file.path(tempdir(), 'fulltable.rds')
+
+savefulltb( census,
+            hkey = c("CP_CD","CDW_CD","ZONE_CD"),
+            key = c("RPRSNTV_SEXDSTN", "AGE_FACTOR", "BR_ACT", "BR_JOJIK", "ORG_FORM_CD"),
+            B=3,
+            output.path = fulltb)
+
+saveaggtb( hkey.level = 2,
+           key        = c("RPRSNTV_SEXDSTN","AGE_FACTOR"),
+           input.path      = fulltb)
+}
+
 }

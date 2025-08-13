@@ -26,3 +26,6 @@ Imports:
     data.table,
     dplyr,
     magrittr
+Depends: 
+    R (>= 3.5)
+LazyData: true

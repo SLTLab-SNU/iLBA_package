@@ -8,7 +8,7 @@
 #'   - k: number of cells equal to B after SCA
 #'   - f_i: true frequency from upper table
 #' @param B Threshold for masking (default = 3).
-#' @return Numeric vector c(Masked, type1, type2).
+#' @return Numeric vector c(Masked, type1, type2) is returned.
 #' @keywords internal
 #' @references Park, M.J., Kim, H.J., & Kwon, S. (2024). *Journal of the Korean Statistical Society*. Springer Nature.
 iLBA <- function(x, B = 3) {

@@ -5,7 +5,7 @@
 #'
 #' @param freq Numeric vector of cell frequencies.
 #' @param B Threshold for masking (default = 3).
-#' @return Numeric vector of masked cell frequencies.
+#' @return Numeric vector of masked cell frequencies is returned.
 #' @keywords internal
 #' @references Hundepool, A., Domingo-Ferrer, J., Franconi, L., Giessing, S., Nordholt, E. S., Spicer, K., & de Wolf, P.-P. (2012). *Statistical Disclosure Control*. Wiley.
 SCA <- function(freq, B = 3) {

@@ -27,17 +27,17 @@ savefulltb(
 
 \item{key.threshold}{Maximum number of unique values allowed for key variables (default = 100). Variables with more unique values will be removed.}
 
-\item{output.path}{String path to save the resulting RDS object (default = "fulltable.rds").
-
-This function saves the following metadata:
-\describe{
-\item{fulltb}{A \code{data.table} with raw counts (\code{N}) and masked counts (\code{N_SCA}).}
+\item{output.path}{String path to save the resulting RDS object (default = "fulltable.rds").}
+}
+\value{
+This function is called for its side effects: it saves a list object to an RDS file at the specified path.
+The saved object contains the followings:
+\item{fulltb}{A \code{data.table} with original counts (\code{N}) and masked counts (\code{N_SCA}).}
 \item{B}{The masking threshold used for SCA.}
 \item{hkey}{Ordered hierarchical key variable names.}
-\item{hkey_values}{Named list of sorted unique values for each hierarchical key.}
-\item{key}{Final set of key variables after threshold filtering.}
-\item{key_values}{Named list of sorted unique values for each key.}
-}}
+\item{hkey_values}{A named list of sorted unique values for each hierarchical key variable.}
+\item{key}{Final set of key variable names used in the frequency table}
+\item{key_values}{A named list of sorted unique values for each key variable.}
 }
 \description{
 Computes a full frequency table from the microdata, applies SCA masking,

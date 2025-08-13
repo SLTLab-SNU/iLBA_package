@@ -12,7 +12,7 @@ SCA(freq, B = 3)
 \item{B}{Threshold for masking (default = 3).}
 }
 \value{
-Numeric vector of masked cell frequencies.
+Numeric vector of masked cell frequencies is returned.
 }
 \description{
 Applies SCA algorithm to cell frequencies below a threshold B.

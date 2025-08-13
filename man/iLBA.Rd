@@ -17,7 +17,7 @@ iLBA(x, B = 3)
 \item{B}{Threshold for masking (default = 3).}
 }
 \value{
-Numeric vector c(Masked, type1, type2).
+Numeric vector c(Masked, type1, type2) is returned.
 }
 \description{
 Applies iLBA algorithm when aggregating cell frequencies.

@@ -9,6 +9,24 @@
 #' @param key.value A vector of values for the key variables (in the same order as `key`).
 #' @param input.path String path to load the RDS object produced by `savefulltb()` (default = "fulltable.rds").
 #'
+#'
+#' @examples
+#' \donttest{
+#' fulltb <- file.path(tempdir(), 'fulltable.rds')
+#'
+#' savefulltb( census,
+#'             hkey = c("CP_CD","CDW_CD","ZONE_CD"),
+#'             key = c("RPRSNTV_SEXDSTN", "AGE_FACTOR", "BR_ACT", "BR_JOJIK", "ORG_FORM_CD"),
+#'             B=3,
+#'             output.path = fulltb)
+#'
+#' returnaggfreq( hkey.level = 2,
+#'                key = c('RPRSNTV_SEXDSTN'),
+#'                hkey.value = c('21','11010'),
+#'                key.value = c('1'),
+#'                input.path = fulltb)
+#'}
+#'
 #' @importFrom magrittr %>%
 #' @export
 returnaggfreq <- function(hkey.level, key, hkey.value, key.value, input.path = "fulltable.rds") {
