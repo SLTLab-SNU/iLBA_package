@@ -10,9 +10,9 @@
 #' @param output.infoloss.path String path to save the information loss distribution in CSV format (default = "infoloss.csv").
 #'
 #' @return
-#' This function is called for its side effects: it saves two CSV files —
+#' Saves two CSV files —
 #' (1) the aggregated masked table and (2) the distribution of information loss —
-#' to the specified file paths. No value is returned.
+#' to the specified file paths.
 #'
 #' @examples
 #' \donttest{
