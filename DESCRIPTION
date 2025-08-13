@@ -3,11 +3,17 @@ Title: Information Loss Bounded Aggregation
 Version: 1.0.0
 Authors@R: 
     person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: Provides tools for constructing masked and aggregated frequency tables from microdata using the iLBA algorithm,
-  especially in the presence of hierarchical variables. As demand grows-particularly in statistical agencies-for disseminating frequency tables based on various combinations of variables,
-  including hierarchical structures, iLBA offers a masking method that enables safe public release by controlling disclosure risk 
-  and information loss. This package provides aggregated and masked frequency tables based on user-specified variables, as well as full frequency tables with metadata.
-  Moreover, it supports queries for masked frequency counts under specific conditions on selected variables.
+Description: Provides tools for constructing aggregated frequency tables from
+  microdata that are masked using the iLBA algorithm, especially in the presence
+  of hierarchical variables. There is a growing demand - particularly in
+  statistical agencies - for aggregated frequency tables, as users often request
+  statistics for specific subsets of variables, including those with hierarchical
+  structures. The iLBA algorithm offers a masking method that ensures safe
+  public release by simultaneously controlling both disclosure risk and
+  information loss. This package provides tools for generating full frequency
+  tables from microdata, producing masked aggregated frequency tables using the
+  iLBA algorithm, and retrieving masked counts for specific combinations of
+  variables.
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license
 Encoding: UTF-8
