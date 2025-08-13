@@ -39,7 +39,7 @@ savefulltb( census,
 
 returnaggfreq( hkey.level = 2,
                key = c('RPRSNTV_SEXDSTN'),
-               hkey.value = c('21','11010'),
+               hkey.value = c('11','11010'),
                key.value = c('1'),
                input.path = fulltb)
 }
