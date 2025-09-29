@@ -6,7 +6,7 @@
 #' @param data Data.frame or data.table containing the raw microdata.
 #' @param hkey Character vector of hierarchical key variable names.
 #' @param key Character vector of key variable names (default = all column names of data except hkey).
-#' @param B Threshold for masking (default = 3).
+#' @param B Threshold for masking (default = 5).
 #' @param rank Numeric vector specifying the rank of hierarchical key variables (default = c(1,...,length(hkey)).
 #' @param key.threshold Maximum number of unique values allowed for key variables (default = 100). Variables with more unique values will be removed.
 #' @param output.path String path to save the resulting RDS object (default = "fulltable.rds").
@@ -24,7 +24,7 @@
 #' @importFrom magrittr %>%
 #' @import data.table
 #' @export
-savefulltb <- function(data, hkey, key = NULL, B = 3, rank = NULL, key.threshold = 100, output.path = "fulltable.rds"){
+savefulltb <- function(data, hkey, key = NULL, B = 5, rank = NULL, key.threshold = 100, output.path = "fulltable.rds"){
 
   dt <- data.table::as.data.table(data)
 
