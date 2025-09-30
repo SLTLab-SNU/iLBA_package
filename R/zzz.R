@@ -1,6 +1,5 @@
-if (getRversion() >= "2.15.1") {
-  utils::globalVariables(c(
-    ".", ":=", ".SD", ".N", "N", "n", "N_SCA", "..key", "..hkey_ordered"
-  ))
-}
-
+utils::globalVariables(c(
+  ".", ":=", ".SD", ".N",
+  "N", "N_masked", "Loss", "..cols_used",
+  "..key", "..hkey_ordered", "N_SCA"
+))

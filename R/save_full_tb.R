@@ -129,7 +129,7 @@ save_full_tb <- function(
     names(out) <- key
     out
   } else {
-    setNames(vector("list", 0L), character())
+    stats::setNames(vector("list", 0L), character())
   }
 
   # Assemble as a list and save in rds format
