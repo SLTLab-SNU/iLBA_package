@@ -3,3 +3,6 @@
 .RData
 .Rproj.hjeeh/
 .DS_Store
+full_tb.rds
+agg_tb.csv
+info_loss.csv
