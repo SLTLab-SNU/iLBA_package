@@ -1,7 +1,8 @@
 #' Save full frequency table with true and masked counts
 #'
-#' Computes a full frequency table from microdata, applies SCA masking to cell
-#' frequencies, and saves the result as an RDS file.
+#' Computes a full frequency table from microdata, applies SCA masking to cell counts,
+#' and saves an RDS file containing the table with both true and masked counts,
+#' together with relevant metadata.
 #'
 #' @param data A data.frame or data.table containing the raw microdata.
 #' @param hkey Character vector of hierarchical key variable names.
@@ -14,7 +15,7 @@
 #' @param key_thr Integer: maximum allowed number of unique values for each `key`
 #'   variable (default `100`). Variables exceeding this limit are removed.
 #' @param output_path String path where the resulting RDS object is saved
-#'   (default `"full_tb.rds"`).
+#'   (RDS; default `"full_tb.rds"`).
 #'
 #' @return
 #' (Invisibly) returns a list also saved to `output_path`. The list contains:
@@ -95,30 +96,28 @@ save_full_tb <- function(
     hkey_ordered <- hkey
   }
 
-  # Remove rows with NA only in selected columns (hkey + key)
-  cols_used <- c(hkey_ordered, key)
-  na_rows <- data[, sum(!stats::complete.cases(.SD)), .SDcols = cols_used]
-  if (na_rows > 0L) {
-    data <- data[stats::complete.cases(data[, ..cols_used]), , drop = FALSE]
-    data.table::setDT(data)  # ensure data.table after base subsetting
-    message(na_rows, " rows with missing values in selected columns have been removed.")
-  }
-
-  # Remove key variables with unique values > key_thr
+  # Drop over-threshold keys
   if (length(key) > 0L) {
-    unique_counts <- data[, sapply(.SD, data.table::uniqueN), .SDcols = key]
+    unique_counts <- stats::setNames(sapply(key, function(v) data.table::uniqueN(data[[v]])), key)
     to_remove <- names(unique_counts)[unique_counts > key_thr]
     if (length(to_remove) > 0L) {
-      data[, (to_remove) := NULL]
       key <- setdiff(key, to_remove)
       message("Removed key variables with > ", key_thr,
               " unique values: ", paste(to_remove, collapse = ", "))
     }
   }
 
+  # Remove rows with NA in the remaining selected columns (hkey + key)
+  cols_used <- c(hkey_ordered, key)
+  rows_wo_na <- stats::complete.cases(data[, cols_used, with = FALSE])
+  na_count <- sum(!rows_wo_na)
+  if (na_count > 0L) {
+    data <- data[rows_wo_na]
+    message(na_count, " rows with missing values in selected columns have been removed.")
+  }
+
   # Build full frequency table and apply SCA
-  by_cols <- c(hkey_ordered, key)
-  full_tb <- data[, .(N = .N), by = by_cols][, N_masked := apply_SCA(N, mask_thr)]
+  full_tb <- data[, .(N = .N), by = cols_used][, N_masked := apply_SCA(N, mask_thr)]
 
   # Save hkey_values and key_values
   hkey_values <- lapply(data[, ..hkey_ordered], function(x) sort(unique(x)))

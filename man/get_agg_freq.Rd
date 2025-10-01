@@ -27,6 +27,6 @@ get_agg_freq(
 Integer scalar: masked count (\code{N_masked}) for the specified cell.
 }
 \description{
-Computes the masked count via the iLBA algorithm for a specified cell
-defined by values of hierarchical key variables and key variables.
+Uses the iLBA algorithm to compute the masked aggregated count for a specific cell,
+identified by values of hierarchical key variables and key variables.
 }

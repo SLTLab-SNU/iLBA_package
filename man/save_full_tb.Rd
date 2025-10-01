@@ -32,7 +32,7 @@ This corresponds to \strong{B} in the iLBA literature.}
 variable (default \code{100}). Variables exceeding this limit are removed.}
 
 \item{output_path}{String path where the resulting RDS object is saved
-(default \code{"full_tb.rds"}).}
+(RDS; default \code{"full_tb.rds"}).}
 }
 \value{
 (Invisibly) returns a list also saved to \code{output_path}. The list contains:
@@ -47,8 +47,9 @@ and SCA-masked counts (\code{N_masked}).}
 }
 }
 \description{
-Computes a full frequency table from microdata, applies SCA masking to cell
-frequencies, and saves the result as an RDS file.
+Computes a full frequency table from microdata, applies SCA masking to cell counts,
+and saves an RDS file containing the table with both true and masked counts,
+together with relevant metadata.
 }
 \details{
 Rows with missing values are removed only if they occur in the selected

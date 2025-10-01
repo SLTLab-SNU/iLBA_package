@@ -1,7 +1,7 @@
 #' Return masked frequency for a specific cell
 #'
-#' Computes the masked count via the iLBA algorithm for a specified cell
-#' defined by values of hierarchical key variables and key variables.
+#' Uses the iLBA algorithm to compute the masked aggregated count for a specific cell,
+#' identified by values of hierarchical key variables and key variables.
 #'
 #' @param hkey_level Integer indicating the number of hierarchical key levels to use (1 = top level).
 #' @param key Character vector of key variable names used for the aggregated cell frequency.

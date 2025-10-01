@@ -2,7 +2,7 @@
 % Please edit documentation in R/save_agg_tb.R
 \name{save_agg_tb}
 \alias{save_agg_tb}
-\title{Save aggregated masked table and distribution of information loss}
+\title{Save masked aggregated frequency table and information loss distribution}
 \usage{
 save_agg_tb(
   hkey_level,
@@ -18,11 +18,14 @@ save_agg_tb(
 
 \item{key}{Character vector of key variable names to include in the aggregated table.}
 
-\item{input_path}{String path to the RDS produced by \code{save_full_tb()} (default \code{"full_tb.rds"}).}
+\item{input_path}{String path to the RDS produced by \code{save_full_tb()}
+(default \code{"full_tb.rds"}).}
 
-\item{output_tb_path}{String path to save the aggregated masked table (CSV; default \code{"agg_tb.csv"}).}
+\item{output_tb_path}{String path to save the aggregated masked table
+(CSV; default \code{"agg_tb.csv"}).}
 
-\item{output_iL_path}{String path to save the information loss distribution (CSV; default \code{"info_loss.csv"}).}
+\item{output_iL_path}{String path to save the information loss distribution
+(CSV; default \code{"info_loss.csv"}).}
 }
 \value{
 (Invisibly) returns a list with two elements:
@@ -33,7 +36,7 @@ save_agg_tb(
 Also saves both objects to CSV files.
 }
 \description{
-Aggregates counts from a previously saved full frequency table, applies the
-iLBA adjustment, computes the distribution of information loss, and saves
-both outputs as CSV files.
+Applies the iLBA algorithm to a previously saved full frequency table to compute
+a masked, aggregated frequency table and the corresponding distribution of information loss.
+Both results are saved as CSV files.
 }
