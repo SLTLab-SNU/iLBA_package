@@ -3,31 +3,37 @@
 \docType{data}
 \name{census}
 \alias{census}
-\title{Census sample data}
+\title{Census data}
 \format{
-A data frame with 3000 rows and 8 variables:
+A data frame with 1,000,000 observations on 9 variables:
 \describe{
-\item{CP_CD}{Hierarchical variable 1 (3 levels: 21, 22, 23)}
-\item{CDW_CD}{Hierarchical variable 2 (≈80 levels)}
-\item{ZONE_CD}{Hierarchical variable 3 (≈100 levels)}
-\item{RPRSNTV_SEXDSTN}{Sex (2 levels)}
-\item{AGE_FACTOR}{ Age (6 levels)}
-\item{BR_ACT}{ Act (3 levels)}
-\item{BR_JOJIK}{ Jojik (2 levels)}
-\item{ORG_FORM_CD}{ Organization (5 levels)}
+\item{LA1}{Administrative code for \strong{city/province}.}
+\item{LA2}{Administrative code for \strong{district/county}.}
+\item{LA3}{Administrative code for \strong{sub-district/town}.}
+\item{OA}{Census output area code.}
+\item{gender}{Gender of the respondent.}
+\item{age}{Age group (categorical variable indicating 5-year or 10-year intervals).}
+\item{edu}{Highest educational attainment.}
+\item{mar}{Marital status.}
+\item{htype}{Household type.}
 }
 }
 \source{
-Internal sample derived from the synthetic population census dataset.
+??
 }
 \usage{
 data(census)
 }
 \description{
-Sample from a synthetic population census dataset
+Synthetic microdata derived from Statistics Korea (KOSTAT)
+microdata. The dataset was generated from binned frequency
+tables with small cells removed and resampled to approximate
+the original distribution while ensuring anonymity. Includes
+socio-demographic variables and administrative codes (LA1, LA2, LA3, OA).
 }
 \details{
-'CP_CD','CDW_CD','ZONE_CD' are hierachical key variables and
-'RPRSNTV_SEXDSTN','AGE_FACTOR','BR_ACT','BR_JOJIK','ORG_FORM_CD' are key variables.
+This dataset is not the original confidential microdata.
+It is an anonymized and processed version intended solely
+for demonstration and examples within this package.
 }
 \keyword{datasets}
