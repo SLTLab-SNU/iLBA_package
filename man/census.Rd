@@ -18,9 +18,6 @@ A data frame with 1,000,000 observations on 9 variables:
 \item{htype}{Household type.}
 }
 }
-\source{
-??
-}
 \usage{
 data(census)
 }
