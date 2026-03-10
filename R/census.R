@@ -24,6 +24,5 @@
 #' @details This dataset is not the original confidential microdata.
 #' It is an anonymized and processed version intended solely
 #' for demonstration and examples within this package.
-#' @source ??
 #' @keywords datasets
 "census"
