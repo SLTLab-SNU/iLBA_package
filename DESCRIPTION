@@ -14,8 +14,7 @@ Description: Provides tools for constructing aggregated frequency tables from
   tables from microdata, producing masked aggregated frequency tables using the
   iLBA algorithm, and retrieving masked counts for specific combinations of
   variables.
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
