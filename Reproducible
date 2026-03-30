@@ -1,1 +1,70 @@
 
+library(writexl)
+
+# 1. setting parameters
+hkey_levels <- 1:4
+key_lists <- list(
+  c("gender"),
+  c("gender", "mar"),
+  c("gender", "mar", "edu"),
+  c("gender", "mar", "edu", "age"),
+  c("gender", "mar", "edu", "age", "htype")
+)
+
+# 2. dataframe for saving results
+result_df <- data.frame(
+  hkey_level = integer(),
+  num_keys = integer(),
+  keys_used = character(),
+  time_seconds = numeric(),
+  num_rows = integer(),
+  stringsAsFactors = FALSE
+)
+
+# 3. for loop 
+for (hl in hkey_levels) {
+  for (i in seq_along(key_lists)) {
+    current_keys <- key_lists[[i]]
+    
+    
+    cat(sprintf("Implementing: hkey_level = %d, keys = %s\n", hl, paste(current_keys, collapse = ", ")))
+    
+    
+    start_time <- Sys.time()
+    
+    
+    temp <- save_agg_tb(
+      hkey_level = hl,
+      key = current_keys,
+      input_path = "full_tb.rds",
+      output_tb_path = "agg_tb.csv",
+      output_iL_path = "info_loss.csv"
+    )
+    
+    
+    end_time <- Sys.time()
+    elapsed_time <- as.numeric(difftime(end_time, start_time, units = "secs"))
+    
+    
+    n_rows <- nrow(temp$agg_tb)
+    
+    
+    result_df <- rbind(result_df, data.frame(
+      hkey_level = hl,
+      num_keys = length(current_keys),
+      keys_used = paste(current_keys, collapse = ", "),
+      time_seconds = round(elapsed_time, 4), 
+      num_rows = n_rows,
+      stringsAsFactors = FALSE
+    ))
+  }
+}
+
+# 4. Results
+print(result_df)
+
+# 5. Save
+write.csv(result_df, "experiment_results.csv", row.names = FALSE)
+
+
+
