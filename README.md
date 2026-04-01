@@ -1,12 +1,12 @@
 # iLBA
 
-**iLBA** is an R package for confidentially disseminating aggregated frequency tables from microdata with hierarchical variables. It implements the **Information-Loss-Bounded Aggregation (iLBA)** algorithm of *[Park et al. (2024)](https://link.springer.com/article/10.1007/s42952-023-00248-x)*, together with **Small Cell Adjustment (SCA)** at the finest table level.
+**iLBA** is an R package for the confidential dissemination of aggregated frequency tables from microdata with hierarchical variables. It implements the **Information-Loss-Bounded Aggregation (iLBA)** algorithm described in *[Disseminating massive frequency tables by masking aggregated cell frequencies](https://link.springer.com/article/10.1007/s42952-023-00248-x)*, together with **Small Cell Adjustment (SCA)** at the finest table level.
 
-The package is designed for settings in which users may request many frequency tables across different combinations of hierarchical key variables and non-hierarchical key variables. In such settings, masking small cells in each table separately may still leave disclosure risks through differencing across released tables. The iLBA algorithm addresses this problem by masking aggregated counts while bounding information loss.
+The package is primarily intended for **statistical agencies** and other producers of official statistics. It focuses on the **confidential dissemination of aggregated frequency tables** from microdata with hierarchical variables. In this setting, two naive approaches are unsatisfactory. Applying **SCA directly to aggregated cell counts** often results in **disclosure risk** through differencing-based inference. On the other hand, **summing SCA-masked counts from the finest level** can lead to substantial **information loss**. The iLBA algorithm is designed to address this problem by protecting aggregated counts while bounding information loss.
 
 ## Installation
 
-You can install the development version from GitHub:
+You can install the package from GitHub:
 
 ```r
 # install.packages("remotes")
@@ -21,7 +21,7 @@ remotes::install_github("SLTLab-SNU/iLBA_package")
 - Export **information loss summaries**
 - Return a **masked frequency for a single queried cell**
 
-## Main Functions
+## Main Functions and Example Usage
 
 ### `save_full_tb()`
 
@@ -35,6 +35,18 @@ save_full_tb(
   mask_thr = 5,
   hkey_rank = NULL,
   key_thr = 100,
+  output_path = "full_tb.rds"
+)
+```
+
+Example:
+
+```r
+save_full_tb(
+  data = census_microdata,
+  hkey = c("LA1", "LA2", "LA3", "OA"),
+  key = c("gender", "age", "edu", "mar", "htype"),
+  mask_thr = 5,
   output_path = "full_tb.rds"
 )
 ```
@@ -53,6 +65,18 @@ save_agg_tb(
 )
 ```
 
+Example:
+
+```r
+save_agg_tb(
+  hkey_level = 3,
+  key = c("gender", "age", "htype"),
+  input_path = "full_tb.rds",
+  output_tb_path = "agg_tb.csv",
+  output_iL_path = "info_loss.csv"
+)
+```
+
 ### `get_agg_freq()`
 
 Returns a masked frequency for a single user-specified aggregated cell.
@@ -63,6 +87,18 @@ get_agg_freq(
   key,
   hkey_value,
   key_value,
+  input_path = "full_tb.rds"
+)
+```
+
+Example:
+
+```r
+get_agg_freq(
+  hkey_level = 3,
+  key = c("gender", "age", "htype"),
+  hkey_value = c("11", "110", "11010"),
+  key_value = c("Female", "30-34", "Apartment"),
   input_path = "full_tb.rds"
 )
 ```
