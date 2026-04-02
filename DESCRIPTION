@@ -5,14 +5,7 @@ Authors@R: c(
     person("Jeehyun", "Hwang", email = "hwangjh@snu.ac.kr", role = c("aut", "cre")),
     person("Dongsun", "Yoon", email = "dsyoon@umich.edu", role = "aut")
   )
-Description: Provides tools for constructing confidential frequency tables
-    from a microdata set with hierarchical variables using the iLBA algorithm. 
-    As the demand for aggregated frequency tables defined on selected subsets 
-    of variables increases, the iLBA algorithm offers an effective masking 
-    approach. It enables the confidential release of such tables by jointly 
-    controlling disclosure risk and information loss. The package supports the
-    generation of masked finest-level frequency tables, masked aggregated 
-    frequency tables, and masked counts for individual cells in aggregated tables.
+Description: Provides tools based on the iLBA algorithm for constructing confidential frequency tables from a microdata set with hierarchical variables. Tha package is designed to support the confidential release of aggregated frequency tables defined on selected subsets of variables, while jointly controlling disclosure risk and information loss. It provides functions for generating masked finest level and aggregated frequency tables, as well as protected counts for user-specified cells.
 License: GPL (>= 3) | file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
