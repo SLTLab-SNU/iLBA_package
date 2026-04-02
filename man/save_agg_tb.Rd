@@ -14,7 +14,7 @@ save_agg_tb(
 }
 \arguments{
 \item{hkey_level}{Integer indicating the hierarchical level to aggregate at
-(1 = top level).}
+(e.g., \code{1} corresponds to the coarsest level).}
 
 \item{key}{Character vector of key variable names to include in the aggregated table.}
 
@@ -36,7 +36,28 @@ save_agg_tb(
 Also saves both objects to CSV files.
 }
 \description{
-Applies the iLBA algorithm to a previously saved full frequency table to compute
-a masked, aggregated frequency table and the corresponding distribution of information loss.
+Applies the iLBA algorithm to a previously saved finest level frequency table to compute
+a masked aggregated frequency table and the corresponding distribution of information loss.
 Both results are saved as CSV files.
+}
+\examples{
+save_full_tb(
+data = census,
+hkey = c("LA1","LA2","LA3","OA"),
+key = c("gender", "age", "edu", "mar", "htype"),
+mask_thr = 5,
+output_path = "full_tb.rds"
+)
+
+
+save_agg_tb(
+hkey_level = 3,
+key = c("gender","age","htype"),
+input_path = "full_tb.rds",
+output_tb_path = "agg_tb.csv",
+output_iL_path = "info_loss.csv"
+)
+
+
+
 }

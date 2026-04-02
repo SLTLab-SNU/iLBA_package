@@ -1,14 +1,46 @@
 #' Return masked frequency for a specific cell
 #'
-#' Uses the iLBA algorithm to compute the masked aggregated count for a specific cell,
-#' identified by values of hierarchical key variables and key variables.
+#' Applies the iLBA algorithm to a previously saved finest-level frequency
+#' table and computes the masked aggregated count for a specific cell,
+#' identified by user-specified attribute combinations.
 #'
-#' @param hkey_level Integer indicating the number of hierarchical key levels to use (1 = top level).
-#' @param key Character vector of key variable names used for the aggregated cell frequency.
-#' @param hkey_value Vector of values for the hierarchical key variables (length must equal `hkey_level`).
-#' @param key_value Vector of values for the key variables (same order as `key`).
-#' @param input_path String path to the RDS object produced by `save_full_tb()` (default `"full_tb.rds"`).
-#' @return Integer scalar: masked count (`N_masked`) for the specified cell.
+#' @param hkey_level Integer indicating the hierarchical level to aggregate at
+#'   (e.g., `1` corresponds to the coarsest level).
+#' @param key Character vector of key variable names used to define
+#'   the aggregated cell.
+#' @param hkey_value Vector of values for the hierarchical key variables.
+#'   Its length must match `hkey_level`. Specifically, the values should
+#'   correspond to a path along the hierarchy. For example, if
+#'   `hkey_level = 3`, then `hkey_value` must contain three values
+#'   representing a unit and its associated higher-level (coarser)
+#'   hierarchical values.
+#' @param key_value Vector of values for the key variables, specified in the same
+#'   order as `key`. That is, each element of `key_value` should correspond to the
+#'   attribute of the variable in `key` at the same position.
+#' @param input_path String specifying the path to the RDS object produced
+#'   by `save_full_tb()` (default `"full_tb.rds"`).
+#'
+#' @examples
+#' save_full_tb(
+#' data = census,
+#' hkey = c("LA1","LA2","LA3","OA"),
+#' key = c("gender", "age", "edu", "mar", "htype"),
+#' mask_thr = 5,
+#' output_path = "full_tb.rds"
+#' )
+#'
+#' get_agg_freq(
+#' hkey_level = 3,
+#' key = c('gender', 'age', 'edu'),
+#' hkey_value = c('01','0104','010407'),
+#' key_value = c(2, 4, 6),
+#' input_path = "full_tb.rds"
+#' )
+#'
+#'
+#'
+#' @return
+#' Integer scalar giving the masked count (`N_masked`) for the specified cell.
 #' @importFrom magrittr %>%
 #' @export
 get_agg_freq <- function(

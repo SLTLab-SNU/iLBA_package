@@ -1,26 +1,29 @@
 #' Save full frequency table with true and masked counts
 #'
-#' Computes a full frequency table from microdata, applies SCA masking to cell counts,
-#' and saves an RDS file containing the table with both true and masked counts,
-#' together with relevant metadata.
+#' Computes a finest-level frequency table from a microdata set, applies
+#' SCA masking to the cell counts, and saves an RDS file containing the
+#' masked finest-level frequency table, the masking threshold, and the
+#' variables used and attribute information.
 #'
-#' @param data A data.frame or data.table containing the raw microdata.
-#' @param hkey Character vector of hierarchical key variable names.
-#' @param key Character vector of key variable names. If `NULL` (default),
+#' @param data A data.frame or data.table containing the raw microdata set.
+#' @param hkey Character vector of hierarchical key variables names used to define the finest level table.
+#' @param key Character vector of key variables names used to define the finest level table. If `NULL` (default),
 #'   all columns in `data` except those in `hkey` are used.
-#' @param mask_thr Integer: masking threshold for SCA/iLBA (default `5`).
-#'   This corresponds to **B** in the iLBA literature.
-#' @param hkey_rank Optional numeric vector giving the order of `hkey`
-#'   (same length as `hkey`). If provided, `hkey` is reordered by this rank.
-#' @param key_thr Integer: maximum allowed number of unique values for each `key`
-#'   variable (default `100`). Variables exceeding this limit are removed.
-#' @param output_path String path where the resulting RDS object is saved
-#'   (RDS; default `"full_tb.rds"`).
+#' @param mask_thr Integer. Masking threshold for SCA/iLBA (default `5`).
+#'   This corresponds to \eqn{K} in the iLBA literature.
+#' @param hkey_rank Optional numeric vector specifying the order of `hkey`
+#'   (same length as `hkey`). If provided, `hkey` is reordered accordingly.
+#'   For example, if 'hkey' is specifies as 'c('province', 'town', 'county'),
+#'   the adequet input for 'hkey_rank' is 'c(1,3,2)'.
+#' @param key_thr Integer. Maximum allowed number of unique values for each
+#'   `key` variable (default `100`). Variables exceeding this limit are removed.
+#' @param output_path String specifying the path where the resulting RDS object
+#'   is saved (default `"full_tb.rds"`).
 #'
 #' @return
-#' (Invisibly) returns a list also saved to `output_path`. The list contains:
+#' Invisibly returns a list that is also saved to `output_path`. The list contains:
 #' \describe{
-#'   \item{full_tb}{A `data.table` with original counts (`N`)
+#'   \item{full_tb}{A `data.table` containing original counts (`N`)
 #'                 and SCA-masked counts (`N_masked`).}
 #'   \item{mask_thr}{The masking threshold used for SCA.}
 #'   \item{hkey}{Ordered hierarchical key variable names.}
@@ -31,9 +34,20 @@
 #'
 #' @details
 #' Rows with missing values are removed only if they occur in the selected
-#' `hkey` or `key` columns.
-#' The full frequency table is computed over `c(hkey, key)`, with counts in `N`,
-#' and SCA masking applied via `apply_SCA(N, mask_thr)` to produce `N_masked`.
+#' `hkey` or `key` columns. The full frequency table is computed over
+#' `c(hkey, key)`, with counts stored in `N`. SCA masking is then applied
+#' using `apply_SCA(N, mask_thr)` to produce `N_masked`.
+#'
+#' @examples
+#' save_full_tb(
+#' data = census,
+#' hkey = c("LA1","LA2","LA3","OA"),
+#' key = c("gender", "age", "edu", "mar", "htype"),
+#' mask_thr = 5,
+#' output_path = "full_tb.rds"
+#' )
+#'
+#'
 #'
 #' @import data.table
 #' @export

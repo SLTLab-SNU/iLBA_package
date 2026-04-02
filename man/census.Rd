@@ -7,13 +7,13 @@
 \format{
 A data frame with 1,000,000 observations on 9 variables:
 \describe{
-\item{LA1}{Administrative code for \strong{city/province}.}
-\item{LA2}{Administrative code for \strong{district/county}.}
-\item{LA3}{Administrative code for \strong{sub-district/town}.}
-\item{OA}{Census output area code.}
+\item{LA1}{Administrative code for the city/province level.}
+\item{LA2}{Administrative code for the district/county level. The city is divided into 5 districts.}
+\item{LA3}{Administrative code for the sub-district/town level. In total, there are 78 sub-districts.}
+\item{OA}{Census block identifier representing the smallest statistical unit. There are 2,506 census blocks in total.}
 \item{gender}{Gender of the respondent.}
-\item{age}{Age group (categorical variable indicating 5-year or 10-year intervals).}
-\item{edu}{Highest educational attainment.}
+\item{age}{Age group in 5-year intervals.}
+\item{edu}{Highest level of education attained.}
 \item{mar}{Marital status.}
 \item{htype}{Household type.}
 }
@@ -22,15 +22,13 @@ A data frame with 1,000,000 observations on 9 variables:
 data(census)
 }
 \description{
-Synthetic microdata derived from Statistics Korea (KOSTAT)
-microdata. The dataset was generated from binned frequency
-tables with small cells removed and resampled to approximate
-the original distribution while ensuring anonymity. Includes
-socio-demographic variables and administrative codes (LA1, LA2, LA3, OA).
+\code{census} is a synthetic dataset that mimics the distribution of the
+2010 Korean Census microdata. It contains 1,000,000 records, four hierarchical
+administrative variables (LA1, LA2, LA3, and OA), and five key demographic
+variables (gender, age, edu, mar, and htype).
 }
 \details{
-This dataset is not the original confidential microdata.
-It is an anonymized and processed version intended solely
-for demonstration and examples within this package.
+Additional metadata for this dataset is available in the package repository:
+\url{https://github.com/SLTLab-SNU/iLBA_package/blob/main/data/metadata.xlsx}
 }
 \keyword{datasets}

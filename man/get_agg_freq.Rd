@@ -13,20 +13,51 @@ get_agg_freq(
 )
 }
 \arguments{
-\item{hkey_level}{Integer indicating the number of hierarchical key levels to use (1 = top level).}
+\item{hkey_level}{Integer indicating the hierarchical level to aggregate at
+(e.g., \code{1} corresponds to the coarsest level).}
 
-\item{key}{Character vector of key variable names used for the aggregated cell frequency.}
+\item{key}{Character vector of key variable names used to define
+the aggregated cell.}
 
-\item{hkey_value}{Vector of values for the hierarchical key variables (length must equal \code{hkey_level}).}
+\item{hkey_value}{Vector of values for the hierarchical key variables.
+Its length must match \code{hkey_level}. Specifically, the values should
+correspond to a path along the hierarchy. For example, if
+\code{hkey_level = 3}, then \code{hkey_value} must contain three values
+representing a unit and its associated higher-level (coarser)
+hierarchical values.}
 
-\item{key_value}{Vector of values for the key variables (same order as \code{key}).}
+\item{key_value}{Vector of values for the key variables, specified in the same
+order as \code{key}. That is, each element of \code{key_value} should correspond to the
+attribute of the variable in \code{key} at the same position.}
 
-\item{input_path}{String path to the RDS object produced by \code{save_full_tb()} (default \code{"full_tb.rds"}).}
+\item{input_path}{String specifying the path to the RDS object produced
+by \code{save_full_tb()} (default \code{"full_tb.rds"}).}
 }
 \value{
-Integer scalar: masked count (\code{N_masked}) for the specified cell.
+Integer scalar giving the masked count (\code{N_masked}) for the specified cell.
 }
 \description{
-Uses the iLBA algorithm to compute the masked aggregated count for a specific cell,
-identified by values of hierarchical key variables and key variables.
+Applies the iLBA algorithm to a previously saved finest-level frequency
+table and computes the masked aggregated count for a specific cell,
+identified by user-specified attribute combinations.
+}
+\examples{
+save_full_tb(
+data = census,
+hkey = c("LA1","LA2","LA3","OA"),
+key = c("gender", "age", "edu", "mar", "htype"),
+mask_thr = 5,
+output_path = "full_tb.rds"
+)
+
+get_agg_freq(
+hkey_level = 3,
+key = c('gender', 'age', 'edu'),
+hkey_value = c('01','0104','010407'),
+key_value = c(2, 4, 6),
+input_path = "full_tb.rds"
+)
+
+
+
 }

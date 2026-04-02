@@ -15,29 +15,31 @@ save_full_tb(
 )
 }
 \arguments{
-\item{data}{A data.frame or data.table containing the raw microdata.}
+\item{data}{A data.frame or data.table containing the raw microdata set.}
 
-\item{hkey}{Character vector of hierarchical key variable names.}
+\item{hkey}{Character vector of hierarchical key variables names used to define the finest level table.}
 
-\item{key}{Character vector of key variable names. If \code{NULL} (default),
+\item{key}{Character vector of key variables names used to define the finest level table. If \code{NULL} (default),
 all columns in \code{data} except those in \code{hkey} are used.}
 
-\item{mask_thr}{Integer: masking threshold for SCA/iLBA (default \code{5}).
-This corresponds to \strong{B} in the iLBA literature.}
+\item{mask_thr}{Integer. Masking threshold for SCA/iLBA (default \code{5}).
+This corresponds to \eqn{K} in the iLBA literature.}
 
-\item{hkey_rank}{Optional numeric vector giving the order of \code{hkey}
-(same length as \code{hkey}). If provided, \code{hkey} is reordered by this rank.}
+\item{hkey_rank}{Optional numeric vector specifying the order of \code{hkey}
+(same length as \code{hkey}). If provided, \code{hkey} is reordered accordingly.
+For example, if 'hkey' is specifies as 'c('province', 'town', 'county'),
+the adequet input for 'hkey_rank' is 'c(1,3,2)'.}
 
-\item{key_thr}{Integer: maximum allowed number of unique values for each \code{key}
-variable (default \code{100}). Variables exceeding this limit are removed.}
+\item{key_thr}{Integer. Maximum allowed number of unique values for each
+\code{key} variable (default \code{100}). Variables exceeding this limit are removed.}
 
-\item{output_path}{String path where the resulting RDS object is saved
-(RDS; default \code{"full_tb.rds"}).}
+\item{output_path}{String specifying the path where the resulting RDS object
+is saved (default \code{"full_tb.rds"}).}
 }
 \value{
-(Invisibly) returns a list also saved to \code{output_path}. The list contains:
+Invisibly returns a list that is also saved to \code{output_path}. The list contains:
 \describe{
-\item{full_tb}{A \code{data.table} with original counts (\code{N})
+\item{full_tb}{A \code{data.table} containing original counts (\code{N})
 and SCA-masked counts (\code{N_masked}).}
 \item{mask_thr}{The masking threshold used for SCA.}
 \item{hkey}{Ordered hierarchical key variable names.}
@@ -47,13 +49,26 @@ and SCA-masked counts (\code{N_masked}).}
 }
 }
 \description{
-Computes a full frequency table from microdata, applies SCA masking to cell counts,
-and saves an RDS file containing the table with both true and masked counts,
-together with relevant metadata.
+Computes a finest-level frequency table from a microdata set, applies
+SCA masking to the cell counts, and saves an RDS file containing the
+masked finest-level frequency table, the masking threshold, and the
+variables used and attribute information.
 }
 \details{
 Rows with missing values are removed only if they occur in the selected
-\code{hkey} or \code{key} columns.
-The full frequency table is computed over \code{c(hkey, key)}, with counts in \code{N},
-and SCA masking applied via \code{apply_SCA(N, mask_thr)} to produce \code{N_masked}.
+\code{hkey} or \code{key} columns. The full frequency table is computed over
+\code{c(hkey, key)}, with counts stored in \code{N}. SCA masking is then applied
+using \code{apply_SCA(N, mask_thr)} to produce \code{N_masked}.
+}
+\examples{
+save_full_tb(
+data = census,
+hkey = c("LA1","LA2","LA3","OA"),
+key = c("gender", "age", "edu", "mar", "htype"),
+mask_thr = 5,
+output_path = "full_tb.rds"
+)
+
+
+
 }
