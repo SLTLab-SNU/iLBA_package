@@ -1,21 +1,19 @@
 Package: iLBA
 Title: Information Loss Bounded Aggregation
 Version: 1.0.0
-Authors@R:
-    person("Jeehyun", "Hwang", "hwangjh@snu.ac.kr", role = c("aut", "cre"))
-    person("Dongsun", "Yoon", "dsyoon@umich.edu", role = c("aut", "cre"))
-Description: Provides tools for constructing aggregated frequency tables from
-  microdata that are masked using the iLBA algorithm, especially in the presence
-  of hierarchical variables. There is a growing demand - particularly in
-  statistical agencies - for aggregated frequency tables, as users often request
-  statistics for specific subsets of variables, including those with hierarchical
-  structures. The iLBA algorithm offers a masking method that ensures safe
-  public release by simultaneously controlling both disclosure risk and
-  information loss. This package provides tools for generating full frequency
-  tables from microdata, producing masked aggregated frequency tables using the
-  iLBA algorithm, and retrieving masked counts for specific combinations of
-  variables.
-License: GPL (>=3)
+Authors@R: c(
+    person("Jeehyun", "Hwang", email = "hwangjh@snu.ac.kr", role = c("aut", "cre")),
+    person("Dongsun", "Yoon", email = "dsyoon@umich.edu", role = "aut")
+  )
+Description: Provides tools for constructing confidential frequency tables
+    from a microdata set with hierarchical variables using the iLBA algorithm. 
+    As the demand for aggregated frequency tables defined on selected subsets 
+    of variables increases, the iLBA algorithm offers an effective masking 
+    approach. It enables the confidential release of such tables by jointly 
+    controlling disclosure risk and information loss. The package supports the
+    generation of masked finest-level frequency tables, masked aggregated 
+    frequency tables, and masked counts for individual cells in aggregated tables.
+License: GPL (>= 3) | file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
@@ -29,4 +27,4 @@ Imports:
 Depends: 
     R (>= 3.5)
 LazyData: true
-LazyDataCompression:xz
+LazyDataCompression: xz
