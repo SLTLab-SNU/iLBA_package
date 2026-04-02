@@ -28,7 +28,8 @@ The **Census dataset** is a synthetic dataset designed to mimic the statistical 
 ### Dataset Overview
 The dataset contains **1,000,000 records** with a structured combination of geographic and demographic attributes:
 
-* **Hierarchical Administrative Variables (4):** * `LA1`, `LA2`, `LA3`, and `OA` (Output Area).
+* **Hierarchical Administrative Variables (4):**
+    * `LA1`, `LA2`, `LA3`, and `OA` (Output Area).
 * **Key Demographic Variables (5):**
     * `gender`: Sex of the individual.
     * `age`: Age or age group.
