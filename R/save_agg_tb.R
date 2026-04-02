@@ -1,12 +1,12 @@
 #' Save masked aggregated frequency table and information loss distribution
 #'
-#' Applies the iLBA algorithm to a previously saved finest level frequency table to compute
-#' a masked aggregated frequency table and the corresponding distribution of information loss.
+#' Applies the iLBA algorithm to a previously saved finest level frequency table to generate
+#' a masked aggregated frequency table and the corresponding information loss distribution.
 #' Both results are saved as CSV files.
 #'
 #' @param hkey_level Integer indicating the hierarchical level to aggregate at
 #'   (e.g., `1` corresponds to the coarsest level).
-#' @param key Character vector of key variable names to include in the aggregated table.
+#' @param key Vector of key variable names used to define the aggregated frequency table.
 #' @param input_path String path to the RDS produced by `save_full_tb()`
 #'   (default `"full_tb.rds"`).
 #' @param output_tb_path String path to save the aggregated masked table

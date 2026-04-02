@@ -16,28 +16,28 @@ get_agg_freq(
 \item{hkey_level}{Integer indicating the hierarchical level to aggregate at
 (e.g., \code{1} corresponds to the coarsest level).}
 
-\item{key}{Character vector of key variable names used to define
+\item{key}{Vector of key variable names used to define
 the aggregated cell.}
 
-\item{hkey_value}{Vector of values for the hierarchical key variables.
-Its length must match \code{hkey_level}. Specifically, the values should
-correspond to a path along the hierarchy. For example, if
-\code{hkey_level = 3}, then \code{hkey_value} must contain three values
-representing a unit and its associated higher-level (coarser)
-hierarchical values.}
+\item{hkey_value}{Vector of values for the hierarchical key variables used to define the aggregated cell.
+Its length must match \code{hkey_level}. The values must be provided in
+the same order as the hierarchical variables, from the coarsest level
+to the finest level, up to the level specified by \code{hkey_level}.
+For example, if \code{hkey_level = 3}, then \code{hkey_value} must contain
+three values corresponding to the first three hierarchical levels.}
 
-\item{key_value}{Vector of values for the key variables, specified in the same
-order as \code{key}. That is, each element of \code{key_value} should correspond to the
-attribute of the variable in \code{key} at the same position.}
+\item{key_value}{Vector of values for the key variables used to define the aggregated cell.
+The values must be specified in the same order as the corresponding
+variables in \code{key}.}
 
 \item{input_path}{String specifying the path to the RDS object produced
 by \code{save_full_tb()} (default \code{"full_tb.rds"}).}
 }
 \value{
-Integer scalar giving the masked count (\code{N_masked}) for the specified cell.
+Integer giving the masked count (\code{N_masked}) for the aggregated cell.
 }
 \description{
-Applies the iLBA algorithm to a previously saved finest-level frequency
+Applies the iLBA algorithm to a previously saved finest level frequency
 table and computes the masked aggregated count for a specific cell,
 identified by user-specified attribute combinations.
 }

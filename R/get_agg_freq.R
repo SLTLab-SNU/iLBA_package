@@ -1,22 +1,22 @@
 #' Return masked frequency for a specific cell
 #'
-#' Applies the iLBA algorithm to a previously saved finest-level frequency
+#' Applies the iLBA algorithm to a previously saved finest level frequency
 #' table and computes the masked aggregated count for a specific cell,
 #' identified by user-specified attribute combinations.
 #'
 #' @param hkey_level Integer indicating the hierarchical level to aggregate at
 #'   (e.g., `1` corresponds to the coarsest level).
-#' @param key Character vector of key variable names used to define
+#' @param key Vector of key variable names used to define
 #'   the aggregated cell.
-#' @param hkey_value Vector of values for the hierarchical key variables.
-#'   Its length must match `hkey_level`. Specifically, the values should
-#'   correspond to a path along the hierarchy. For example, if
-#'   `hkey_level = 3`, then `hkey_value` must contain three values
-#'   representing a unit and its associated higher-level (coarser)
-#'   hierarchical values.
-#' @param key_value Vector of values for the key variables, specified in the same
-#'   order as `key`. That is, each element of `key_value` should correspond to the
-#'   attribute of the variable in `key` at the same position.
+#' @param hkey_value Vector of values for the hierarchical key variables used to define the aggregated cell.
+#'   Its length must match `hkey_level`. The values must be provided in
+#'   the same order as the hierarchical variables, from the coarsest level
+#'   to the finest level, up to the level specified by `hkey_level`.
+#'   For example, if `hkey_level = 3`, then `hkey_value` must contain
+#'   three values corresponding to the first three hierarchical levels.
+#' @param key_value Vector of values for the key variables used to define the aggregated cell.
+#'   The values must be specified in the same order as the corresponding
+#'   variables in `key`.
 #' @param input_path String specifying the path to the RDS object produced
 #'   by `save_full_tb()` (default `"full_tb.rds"`).
 #'
@@ -40,7 +40,7 @@
 #'
 #'
 #' @return
-#' Integer scalar giving the masked count (`N_masked`) for the specified cell.
+#' Integer giving the masked count (`N_masked`) for the aggregated cell.
 #' @importFrom magrittr %>%
 #' @export
 get_agg_freq <- function(

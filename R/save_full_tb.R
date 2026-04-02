@@ -1,20 +1,20 @@
-#' Save full frequency table with true and masked counts
+#' Save finest level frequency table with true and masked counts
 #'
-#' Computes a finest-level frequency table from a microdata set, applies
+#' Generates a finest level frequency table from a microdata set, applies
 #' SCA masking to the cell counts, and saves an RDS file containing the
-#' masked finest-level frequency table, the masking threshold, and the
+#' masked finest level frequency table, the masking threshold, and the
 #' variables used and attribute information.
 #'
-#' @param data A data.frame or data.table containing the raw microdata set.
-#' @param hkey Character vector of hierarchical key variables names used to define the finest level table.
-#' @param key Character vector of key variables names used to define the finest level table. If `NULL` (default),
+#' @param data A `data.frame` or `data.table` containing a raw microdata set.
+#' @param hkey Vector of hierarchical key variable names used to define the finest level table.
+#' @param key Vector of key variable names used to define the finest level table. If `NULL` (default),
 #'   all columns in `data` except those in `hkey` are used.
 #' @param mask_thr Integer. Masking threshold for SCA/iLBA (default `5`).
 #'   This corresponds to \eqn{K} in the iLBA literature.
-#' @param hkey_rank Optional numeric vector specifying the order of `hkey`
-#'   (same length as `hkey`). If provided, `hkey` is reordered accordingly.
-#'   For example, if 'hkey' is specifies as 'c('province', 'town', 'county'),
-#'   the adequet input for 'hkey_rank' is 'c(1,3,2)'.
+#' @param hkey_rank Optional numeric vector specifying the order of hierarchical key variables in `hkey`.
+#'   Its length must match `hkey`. If `hkey_rank` is provided, `hkey` is reordered accordingly.
+#'   For example, if `hkey` is specified as `c('province', 'town', 'county')`,
+#'   the adequate input for 'hkey_rank' is `c(1,3,2)`.
 #' @param key_thr Integer. Maximum allowed number of unique values for each
 #'   `key` variable (default `100`). Variables exceeding this limit are removed.
 #' @param output_path String specifying the path where the resulting RDS object
@@ -34,7 +34,7 @@
 #'
 #' @details
 #' Rows with missing values are removed only if they occur in the selected
-#' `hkey` or `key` columns. The full frequency table is computed over
+#' `hkey` or `key` columns. The finest level frequency table is computed over
 #' `c(hkey, key)`, with counts stored in `N`. SCA masking is then applied
 #' using `apply_SCA(N, mask_thr)` to produce `N_masked`.
 #'

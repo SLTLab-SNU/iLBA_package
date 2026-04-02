@@ -2,7 +2,7 @@
 % Please edit documentation in R/save_full_tb.R
 \name{save_full_tb}
 \alias{save_full_tb}
-\title{Save full frequency table with true and masked counts}
+\title{Save finest level frequency table with true and masked counts}
 \usage{
 save_full_tb(
   data,
@@ -15,20 +15,20 @@ save_full_tb(
 )
 }
 \arguments{
-\item{data}{A data.frame or data.table containing the raw microdata set.}
+\item{data}{A \code{data.frame} or \code{data.table} containing a raw microdata set.}
 
-\item{hkey}{Character vector of hierarchical key variables names used to define the finest level table.}
+\item{hkey}{Vector of hierarchical key variable names used to define the finest level table.}
 
-\item{key}{Character vector of key variables names used to define the finest level table. If \code{NULL} (default),
+\item{key}{Vector of key variable names used to define the finest level table. If \code{NULL} (default),
 all columns in \code{data} except those in \code{hkey} are used.}
 
 \item{mask_thr}{Integer. Masking threshold for SCA/iLBA (default \code{5}).
 This corresponds to \eqn{K} in the iLBA literature.}
 
-\item{hkey_rank}{Optional numeric vector specifying the order of \code{hkey}
-(same length as \code{hkey}). If provided, \code{hkey} is reordered accordingly.
-For example, if 'hkey' is specifies as 'c('province', 'town', 'county'),
-the adequet input for 'hkey_rank' is 'c(1,3,2)'.}
+\item{hkey_rank}{Optional numeric vector specifying the order of hierarchical key variables in \code{hkey}.
+Its length must match \code{hkey}. If \code{hkey_rank} is provided, \code{hkey} is reordered accordingly.
+For example, if \code{hkey} is specified as \code{c('province', 'town', 'county')},
+the adequate input for 'hkey_rank' is \code{c(1,3,2)}.}
 
 \item{key_thr}{Integer. Maximum allowed number of unique values for each
 \code{key} variable (default \code{100}). Variables exceeding this limit are removed.}
@@ -49,14 +49,14 @@ and SCA-masked counts (\code{N_masked}).}
 }
 }
 \description{
-Computes a finest-level frequency table from a microdata set, applies
+Generates a finest level frequency table from a microdata set, applies
 SCA masking to the cell counts, and saves an RDS file containing the
-masked finest-level frequency table, the masking threshold, and the
+masked finest level frequency table, the masking threshold, and the
 variables used and attribute information.
 }
 \details{
 Rows with missing values are removed only if they occur in the selected
-\code{hkey} or \code{key} columns. The full frequency table is computed over
+\code{hkey} or \code{key} columns. The finest level frequency table is computed over
 \code{c(hkey, key)}, with counts stored in \code{N}. SCA masking is then applied
 using \code{apply_SCA(N, mask_thr)} to produce \code{N_masked}.
 }
