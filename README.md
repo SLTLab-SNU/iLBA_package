@@ -23,6 +23,24 @@ remotes::install_github("SLTLab-SNU/iLBA_package")
 
 ## Main Functions and Example Usage
 
+The **Census dataset** is a synthetic dataset designed to mimic the statistical distribution of the **2010 Korean Census microdata**. It is provided to demonstrate the package's capabilities in handling large-scale administrative and demographic data.
+
+### Dataset Overview
+The dataset contains **1,000,000 records** with a structured combination of geographic and demographic attributes:
+
+* **Hierarchical Administrative Variables (4):** * `LA1`, `LA2`, `LA3`, and `OA` (Output Area).
+* **Key Demographic Variables (5):**
+    * `gender`: Sex of the individual.
+    * `age`: Age or age group.
+    * `edu`: Educational attainment.
+    * `mar`: Marital status.
+    * `htype`: Household type.
+
+### Metadata
+Detailed information regarding variable definitions, code categories, and dataset attributes can be found in the metadata file:
+
+[**census_metadata.xlsx**](https://github.com/SLTLab-SNU/iLBA_package/blob/main/census_metadata.xlsx)
+
 ### `save_full_tb()`
 
 Constructs the finest-level frequency table from microdata and applies SCA masking to small cells.
@@ -97,8 +115,8 @@ Example:
 get_agg_freq(
   hkey_level = 3,
   key = c("gender", "age", "htype"),
-  hkey_value = c("11", "110", "11010"),
-  key_value = c("Female", "30-34", "Apartment"),
+  hkey_value = c('01','0104','010407'),
+  key_value = c(2, 4, 6),
   input_path = "full_tb.rds"
 )
 ```
