@@ -1,6 +1,6 @@
 # iLBA
 
-**iLBA** is an R package for the confidential dissemination of aggregated frequency tables from microdata with hierarchical variables. It implements the **Information-Loss-Bounded Aggregation (iLBA)** algorithm described in *[Disseminating massive frequency tables by masking aggregated cell frequencies](https://link.springer.com/article/10.1007/s42952-023-00248-x)*, together with **Small Cell Adjustment (SCA)** at the finest table level.
+**iLBA** is an R package for the confidential dissemination of aggregated frequency tables from microdata with hierarchical variables. It implements the **Information-Loss-Bounded Aggregation (iLBA)** algorithm described in *[Disseminating massive frequency tables by masking aggregated cell frequencies](https://link.springer.com/article/10.1007/s42952-023-00248-x)*, together with **Small Cell Adjustment (SCA)** at the finest table level. For detailed explanation, refer to *[iLBA: An R package for confidentially disseminating aggregated frequency tables](https://arxiv.org/abs/2604.04431v1)*.
 
 The package is primarily intended for **statistical agencies** and other producers of official statistics. It focuses on the **confidential dissemination of aggregated frequency tables** from microdata with hierarchical variables. In this setting, two naive approaches are unsatisfactory. Applying **SCA directly to aggregated cell counts** often results in **disclosure risk** through differencing-based inference. On the other hand, **summing SCA-masked counts from the finest level** can lead to substantial **information loss**. The iLBA algorithm is designed to address this problem by protecting aggregated counts while bounding information loss.
 
@@ -126,3 +126,5 @@ get_agg_freq(
 ## Reference
 
 Park, M.-J., Kim, H. J., and Kwon, S. (2024). *[Disseminating massive frequency tables by masking aggregated cell frequencies](https://doi.org/10.1007/s42952-023-00248-x)*. *Journal of the Korean Statistical Society*, 53, 328–348.
+
+Hwang, J., Yoon D., Jung, S., Park, M.-J., Yeo, I. (2026). *[iLBA: An R package for confidentially disseminating aggregated frequency tables](https://arxiv.org/abs/2604.04431v1)*. *ArXiv*, 2604.04431.
